@@ -33,6 +33,11 @@ public class AlertView {
         AlertDialog
     }
 
+    public static enum Orientation {
+        Vertical,
+        Horizontal
+    }
+
     private final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM
     );
@@ -58,6 +63,7 @@ public class AlertView {
     private ViewGroup loAlertHeader;//窗口headerView
 
     private Style style = Style.Alert;
+    private Orientation orientation = Orientation.Horizontal;
 
     private OnDismissListener onDismissListener;
     private OnItemClickListener onItemClickListener;
@@ -69,7 +75,20 @@ public class AlertView {
 
     private AlertDialog mAlertDialog;
 
+
     public AlertView(String title, String msg, String cancel, String[] destructive, String[] others, Context context, Style style, OnItemClickListener onItemClickListener) {
+        this.context = context;
+        if (style != null) this.style = style;
+        this.onItemClickListener = onItemClickListener;
+
+        initData(title, msg, cancel, destructive, others);
+        initViews();
+        init();
+        initEvents();
+    }
+
+    public AlertView(String title, String msg, String cancel, String[] destructive, String[] others, Context context, Style style, OnItemClickListener onItemClickListener, Orientation orientation) {
+        this.orientation = orientation;
         this.context = context;
         if (style != null) this.style = style;
         this.onItemClickListener = onItemClickListener;
@@ -102,9 +121,9 @@ public class AlertView {
         }
         if (cancel != null) {
             this.cancel = cancel;
-            if ((style == Style.Alert || style == Style.AlertDialog) && mDatas.size() < HORIZONTAL_BUTTONS_MAXCOUNT) {
+            //if ((style == Style.Alert || style == Style.AlertDialog) && mDatas.size() < HORIZONTAL_BUTTONS_MAXCOUNT) {
                 this.mDatas.add(0, cancel);
-            }
+            //}
         }
 
     }
@@ -211,7 +230,7 @@ public class AlertView {
 
         int position = 0;
         //如果总数据小于等于HORIZONTAL_BUTTONS_MAXCOUNT，则是横向button
-        if (mDatas.size() <= HORIZONTAL_BUTTONS_MAXCOUNT) {
+        if (mDatas.size() <= HORIZONTAL_BUTTONS_MAXCOUNT && orientation == Orientation.Horizontal) {
             ViewStub viewStub = (ViewStub) contentContainer.findViewById(R.id.viewStubHorizontal);
             viewStub.inflate();
             LinearLayout loAlertButtons = (LinearLayout) contentContainer.findViewById(R.id.loAlertButtons);
