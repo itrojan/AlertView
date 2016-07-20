@@ -122,7 +122,7 @@ public class AlertView {
         if (cancel != null) {
             this.cancel = cancel;
             //if ((style == Style.Alert || style == Style.AlertDialog) && mDatas.size() < HORIZONTAL_BUTTONS_MAXCOUNT) {
-                this.mDatas.add(0, cancel);
+                this.mDatas.add(this.mDatas.size(), cancel);
             //}
         }
 
