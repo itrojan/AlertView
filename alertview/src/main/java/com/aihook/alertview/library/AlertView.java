@@ -291,7 +291,7 @@ public class AlertView {
 
         int position = 0;
         //如果总数据小于等于HORIZONTAL_BUTTONS_MAXCOUNT，则是横向button
-        if (mDatas.size() <= HORIZONTAL_BUTTONS_MAXCOUNT) {
+        if (mDatas.size() <= HORIZONTAL_BUTTONS_MAXCOUNT && orientation == Orientation.Horizontal) {
             ViewStub viewStub = (ViewStub) viewGroup.findViewById(R.id.viewStubHorizontal);
             viewStub.inflate();
             LinearLayout loAlertButtons = (LinearLayout) viewGroup.findViewById(R.id.loAlertButtons);
