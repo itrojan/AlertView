@@ -74,6 +74,7 @@ public class AlertView {
     private int gravity = Gravity.CENTER;
 
     private AlertDialog mAlertDialog;
+    private List<TextView> tvBtns;
 
 
     public AlertView(String title, String msg, String cancel, String[] destructive, String[] others, Context context, Style style, OnItemClickListener onItemClickListener) {
@@ -101,11 +102,12 @@ public class AlertView {
 
     /**
      * 获取数据
-     * @param title 标题
-     * @param msg   内容
-     * @param cancel 取消
+     *
+     * @param title       标题
+     * @param msg         内容
+     * @param cancel      取消
      * @param destructive 按钮
-     * @param others 其他
+     * @param others      其他
      */
     protected void initData(String title, String msg, String cancel, String[] destructive, String[] others) {
 
@@ -229,6 +231,7 @@ public class AlertView {
         initHeaderView(viewGroup);
 
         int position = 0;
+        tvBtns = new ArrayList<>();
         //如果总数据小于等于HORIZONTAL_BUTTONS_MAXCOUNT，则是横向button
         if (mDatas.size() <= HORIZONTAL_BUTTONS_MAXCOUNT && orientation == Orientation.Horizontal) {
             ViewStub viewStub = (ViewStub) contentContainer.findViewById(R.id.viewStubHorizontal);
@@ -272,8 +275,8 @@ public class AlertView {
 
                 tvAlert.setOnClickListener(new OnTextClickListener(position));
                 position++;
-                loAlertButtons.addView(itemView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                loAlertButtons.addView(itemView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                tvBtns.add(tvAlert);
             }
         } else {
             ViewStub viewStub = (ViewStub) contentContainer.findViewById(R.id.viewStubVertical);
@@ -478,6 +481,7 @@ public class AlertView {
 
     /**
      * 主要用于拓展View的时候有输入框，键盘弹出则设置MarginBottom往上顶，避免输入法挡住界面
+     *
      * @param marginBottom 距离底部
      */
     public void setMarginBottom(int marginBottom) {
@@ -519,5 +523,9 @@ public class AlertView {
 
     public AlertDialog getAlertDialog() {
         return mAlertDialog;
+    }
+
+    public List<TextView> getTvBtns(){
+        return tvBtns;
     }
 }
