@@ -396,7 +396,7 @@ public class AlertView {
     }
 
     public void dismiss() {
-        this.dismiss(0);
+        this.dismiss(-1);
     }
 
     public void dismiss(final int position) {
